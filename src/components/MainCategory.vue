@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import MainCategory from './MainCategory.vue';
-
 export default {
   name: 'MainBoard',
   data(){
@@ -47,9 +45,6 @@ export default {
     removeBoard(index){
       this.boards.splice(index, 1);
     }
-  },
-  components: {
-    MainCategory
   }
 }
 </script>
