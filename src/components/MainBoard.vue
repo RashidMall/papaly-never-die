@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <MainCategory v-for="(category, index) in boardObj.categories" :key="index" :category="category"/>
+      <MainCategory v-for="(category, index) in boardObj.categories" :key="index" :category="category" :boardObj="boardObj"/>
 
     </div>
   </div>

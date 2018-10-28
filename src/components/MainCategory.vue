@@ -1,8 +1,8 @@
 <template>
   <div class="categories">
     <div class="header p-3">
-        <i class="fas fa-minus-circle" @click="removeCategory(category.id)"></i>
-        <h3>{{ category.title }}</h3>
+        <i class="fas fa-minus-circle" @click="removeCategory(boardObj.id, category.id)"></i>
+        <h3>{{ category.title }} {{category.id}}</h3>
     </div>
 <!--     <div class="category bg-light m-4" v-for="(categoryObj, index) in boards" :key="index">
       <div class="header p-4">
@@ -18,17 +18,26 @@ import {store} from '../store.js';
 
 export default {
   name: 'MainCategory',
-  props: ['category'],
+  props: ['category', 'boardObj'],
   data(){
     return{
       categoryInput: ''
     }
+  },
+  methods: {
+      removeCategory(boardObjId, categoryId){
+          store.removeCategory(boardObjId, categoryId);
+      }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.categories{
+    background-color: aquamarine;
+    margin: 5px;
+}
 ul {
   list-style-type: none;
   padding: 0;
