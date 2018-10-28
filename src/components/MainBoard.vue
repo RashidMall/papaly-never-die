@@ -10,9 +10,9 @@
         <p class="alert alert-danger" v-if="errors.has('board')">{{ errors.first('board') }}</p>
       </div>
     </form>
-    <div class="board bg-light m-4" v-for="(boardObj, index) in sharedState.seedData" :key="boardObj.id">
+    <div class="board bg-light m-4" v-for="(boardObj, index) in sharedState.seedData" :key="boardObj.id" :boardObj="boardObj">
       <div class="header p-4">
-        <i class="fas fa-minus-circle" @click="removeBoard(index)"></i>
+        <i class="fas fa-minus-circle" @click="removeBoard(index, boardObj.id)"></i>
         <h1>{{ boardObj.title }}</h1>
       </div>
     </div>
@@ -25,6 +25,7 @@ import MainCategory from './MainCategory.vue';
 
 export default {
   name: 'MainBoard',
+  props: ['boardObj'],
   data(){
     return{
       sharedState: store.state,
@@ -42,8 +43,8 @@ export default {
         }
       })
     },
-    removeBoard(index){
-      this.boards.splice(index, 1);
+    removeBoard(index, id){
+      store.removeBoard(index, id);
     }
   },
   components: {
