@@ -10,8 +10,11 @@
         <p class="alert alert-danger" v-if="errors.has('board')">{{ errors.first('board') }}</p>
       </div>
     </form>
-    <div class="board bg-light" v-for="(boardObj, index) in boards" :key="index">
-      <h1>{{ boardObj.board }}</h1>
+    <div class="board bg-light m-4" v-for="(boardObj, index) in boards" :key="index">
+      <div class="header p-4">
+        <i class="fas fa-minus-circle" @click="removeBoard(index)"></i>
+        <h1>{{ boardObj.board }}</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +41,9 @@ export default {
           console.log('Not a valid board name!');
         }
       })
+    },
+    removeBoard(index){
+      this.boards.splice(index, 1);
     }
   }
 }
@@ -58,5 +64,13 @@ li {
 }
 a {
   color: #42b983;
+}
+.board {
+
+}
+.fa-minus-circle {
+  color: red;
+  float: right;
+  cursor: pointer;
 }
 </style>
