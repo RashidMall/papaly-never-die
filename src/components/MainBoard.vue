@@ -1,6 +1,6 @@
 <template>
   <div class="boards">
-    <form @submit.prevent="addBoard">
+    <form @submit.prevent="addBoard(board)">
       <div class="form-group">
         <input class="form-control" type="text" name="board"
           placeholder="Add new board" 
@@ -10,34 +10,32 @@
         <p class="alert alert-danger" v-if="errors.has('board')">{{ errors.first('board') }}</p>
       </div>
     </form>
-    <div class="board bg-light m-4" v-for="(boardObj, index) in boards" :key="index">
+    <div class="board bg-light m-4" v-for="(boardObj, index) in sharedState.seedData" :key="boardObj.id">
       <div class="header p-4">
         <i class="fas fa-minus-circle" @click="removeBoard(index)"></i>
-        <h1>{{ boardObj.board }}</h1>
+        <h1>{{ boardObj.title }}</h1>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {store} from '../store.js';
 import MainCategory from './MainCategory.vue';
 
 export default {
   name: 'MainBoard',
   data(){
     return{
-      boards: [
-        {"board": "test"},
-        {"board": "New Board"}
-      ],
+      sharedState: store.state,
       board: ''
     }
   },
   methods: {
-    addBoard(){
+    addBoard(title){
       this.$validator.validateAll().then(result => {
         if(result){
-          this.boards.push({board: this.board});
+          store.addBoard(title);
           this.board = '';          
         }else{
           console.log('Not a valid board name!');
