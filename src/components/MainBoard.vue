@@ -15,6 +15,19 @@
         <i class="fas fa-minus-circle" @click="removeBoard(index, boardObj.id)"></i>
         <h1>{{ boardObj.title }}</h1>
       </div>
+      <!-- Add new Category input -->
+      <div class="input-group mb-3">
+        <input class="form-control" type="text" name="categoryInput"
+          placeholder="Add new category" 
+          v-model="categoryInput"
+        />
+        <div class="input-group-append">
+          <button @click="addCategory(boardObj.id, categoryInput)" class="btn btn-outline-secondary" type="button">Add</button>
+        </div>
+      </div>
+
+      <MainCategory v-for="(category, index) in boardObj.categories" :key="index" :category="category"/>
+
     </div>
   </div>
 </template>
@@ -25,11 +38,11 @@ import MainCategory from './MainCategory.vue';
 
 export default {
   name: 'MainBoard',
-  props: ['boardObj'],
   data(){
     return{
       sharedState: store.state,
-      board: ''
+      board: '',
+      categoryInput: ''
     }
   },
   methods: {
@@ -45,6 +58,10 @@ export default {
     },
     removeBoard(index, id){
       store.removeBoard(index, id);
+    },
+    addCategory(boardId, title){
+      store.addCategory(boardId, title);
+      this.categoryInput = '';
     }
   },
   components: {

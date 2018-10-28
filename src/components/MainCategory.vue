@@ -1,49 +1,27 @@
 <template>
-  <div class="boards">
-    <form @submit.prevent="addBoard">
-      <div class="form-group">
-        <input class="form-control" type="text" name="board"
-          placeholder="Add new board" 
-          v-model="board" 
-          v-validate="'required|min:3'"
-        />
-        <p class="alert alert-danger" v-if="errors.has('board')">{{ errors.first('board') }}</p>
-      </div>
-    </form>
-    <div class="board bg-light m-4" v-for="(boardObj, index) in boards" :key="index">
+  <div class="categories">
+    <div class="header p-3">
+        <i class="fas fa-minus-circle" @click="removeCategory(category.id)"></i>
+        <h3>{{ category.title }}</h3>
+    </div>
+<!--     <div class="category bg-light m-4" v-for="(categoryObj, index) in boards" :key="index">
       <div class="header p-4">
         <i class="fas fa-minus-circle" @click="removeBoard(index)"></i>
         <h1>{{ boardObj.board }}</h1>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import {store} from '../store.js';
+
 export default {
-  name: 'MainBoard',
+  name: 'MainCategory',
+  props: ['category'],
   data(){
     return{
-      boards: [
-        {"board": "test"},
-        {"board": "New Board"}
-      ],
-      board: ''
-    }
-  },
-  methods: {
-    addBoard(){
-      this.$validator.validateAll().then(result => {
-        if(result){
-          this.boards.push({board: this.board});
-          this.board = '';          
-        }else{
-          console.log('Not a valid board name!');
-        }
-      })
-    },
-    removeBoard(index){
-      this.boards.splice(index, 1);
+      categoryInput: ''
     }
   }
 }
@@ -51,9 +29,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
 ul {
   list-style-type: none;
   padding: 0;
@@ -65,11 +40,7 @@ li {
 a {
   color: #42b983;
 }
-.board {
-
-}
 .fa-minus-circle {
-  color: red;
   float: right;
   cursor: pointer;
 }

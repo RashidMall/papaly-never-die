@@ -17,5 +17,11 @@ export const store = {
           board => board.id === boardId
         );
         this.state.seedData.splice(boardIndexToRemove, 1);
-      }
+    },
+
+    addCategory(boardId, title){
+        const boardObj = this.state.seedData.find(board => board.id === boardId);
+        const id = boardObj.categories.length + 1;
+        boardObj.categories.push({"id": id, "title": title, "subCategories": [], "webSites": []});
+    }
 }
