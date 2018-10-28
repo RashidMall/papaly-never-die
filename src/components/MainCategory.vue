@@ -2,32 +2,40 @@
   <div class="categories">
     <div class="header p-3">
         <i class="fas fa-minus-circle" @click="removeCategory(boardObj.id, category.id)"></i>
-        <h3>{{ category.title }} {{category.id}}</h3>
+        <h3>{{ category.title }}</h3>
     </div>
-<!--     <div class="category bg-light m-4" v-for="(categoryObj, index) in boards" :key="index">
-      <div class="header p-4">
-        <i class="fas fa-minus-circle" @click="removeBoard(index)"></i>
-        <h1>{{ boardObj.board }}</h1>
+    <div class="input-group mb-3">
+        <input class="form-control" type="text" name="websiteURL"
+          placeholder="Add new url" 
+          v-model="websiteURL"
+        />
+        <div class="input-group-append">
+          <button @click="addCategory(boardObj.id, websiteURL)" class="btn btn-outline-secondary" type="button">Add</button>
+        </div>
       </div>
-    </div> -->
+      <WebSite v-for="(webSite, index) in category.webSites" :key="index" :webSite="webSite"/>
   </div>
 </template>
 
 <script>
 import {store} from '../store.js';
+import WebSite from './WebSite.vue';
 
 export default {
   name: 'MainCategory',
   props: ['category', 'boardObj'],
   data(){
     return{
-      categoryInput: ''
+      websiteURL: ''
     }
   },
   methods: {
       removeCategory(boardObjId, categoryId){
           store.removeCategory(boardObjId, categoryId);
       }
+  },
+  components: {
+      WebSite
   }
 }
 </script>
