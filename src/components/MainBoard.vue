@@ -1,0 +1,62 @@
+<template>
+  <div class="boards">
+    <form @submit.prevent="addBoard">
+      <div class="form-group">
+        <input class="form-control" type="text" name="board"
+          placeholder="Add new board" 
+          v-model="board" 
+          v-validate="'required|min:3'"
+        />
+        <p class="alert alert-danger" v-if="errors.has('board')">{{ errors.first('board') }}</p>
+      </div>
+    </form>
+    <div class="board bg-light" v-for="(boardObj, index) in boards" :key="index">
+      <h1>{{ boardObj.board }}</h1>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MainBoard',
+  data(){
+    return{
+      boards: [
+        {"board": "test"},
+        {"board": "New Board"}
+      ],
+      board: ''
+    }
+  },
+  methods: {
+    addBoard(){
+      this.$validator.validateAll().then(result => {
+        if(result){
+          this.boards.push({board: this.board});
+          this.board = '';          
+        }else{
+          console.log('Not a valid board name!');
+        }
+      })
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+</style>
