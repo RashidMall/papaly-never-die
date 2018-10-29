@@ -32,7 +32,7 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #4442b9;
 }
 .fa-minus-circle {
   float: right;
